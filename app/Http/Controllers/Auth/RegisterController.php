@@ -61,6 +61,7 @@ class RegisterController extends Controller
      *
      * @param  array  $data
      * @return \App\User
+     * CRUDのcreateじゃなくて、新規Userを作成している
      */
     protected function create(array $data)
     {
