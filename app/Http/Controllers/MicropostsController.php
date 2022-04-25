@@ -33,11 +33,16 @@ class MicropostsController extends Controller
         $request->validate([
             'content' => 'required|max:255',
         ]);
-
-        // 認証済みユーザ（閲覧者）の投稿として作成（リクエストされた値をもとに作成）
+        
+       
+           // 認証済みユーザ（閲覧者）の投稿として作成（リクエストされた値をもとに作成）
         $request->user()->microposts()->create([
             'content' => $request->content,
-        ]);
+            ]);
+        
+
+        
+        
 
         // 前のURLへリダイレクトさせる。この場合、投稿フォームの戻る
         //投稿フォームより一覧に戻るほうがよくね？
