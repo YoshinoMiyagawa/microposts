@@ -4,21 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class UserFollowController extends Controller
+class FavoritesController extends Controller
 {
    
     public function store($id)
     {
+        
         
         \Auth::user()->favorite($id);
         return back();
     }
 
     /**
-     * ユーザをアンフォローするアクション。
+     * 投稿をお気に入りから外すアクション。
      *
-     * @param  $id  相手ユーザのid
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {

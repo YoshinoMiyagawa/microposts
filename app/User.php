@@ -151,7 +151,7 @@ class User extends Authenticatable
     
     
     /**
-     * このユーザがファボ中の投稿（ Userモデルとの関係を定義）
+     * このユーザがfavorite中の投稿（ Userモデルとの関係を定義）
      */
     public function favorites()
     {
@@ -162,7 +162,7 @@ class User extends Authenticatable
     
      public function favorite($postId)
     {
-        // 
+        // すでにお気に入りしているか
         $exist = $this->is_favorites($postId);
         
 
@@ -177,10 +177,35 @@ class User extends Authenticatable
     }
     public function is_favorites($postId)
     {
-        // フォロー中ユーザの中に $userIdのものが存在するか
-        return $this->favorites()->where('$postId', user_id)->exists();
+        // お気に入りしてる投稿の中に $postIdのものが存在するか
+        return $this->favorites()->where('micropost_id',$postId)->exists();
     }
     
+    public function unfavorite($postId)
+    {
+        // すでにフォローしているか
+        $exist = $this->is_favorites($postId);
+        
+
+        if ($exist ) {
+            // お気に入りしている場合はお気に入りを外す
+            //detach で中間テーブルを削除している
+            $this->favorites()->detach($postId);
+            return true;
+        } else {
+            // 上記以外の場合は何もしない
+            return false;
+        }
+    }
+    
+    public function fav_microposts()
+    {
+        // このユーザがお気に入り中の投稿のidを取得して配列にする
+        $favPostIds = $this->favorites()->pluck($postId)->toArray();
+        
+        // それらのユーザが所有する投稿に絞り込む
+        return Micropost::whereIn($postId, $this->id);
+    }
     
     
     

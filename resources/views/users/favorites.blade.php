@@ -9,7 +9,7 @@
         <div class="col-sm-8">
             {{-- タブ --}}
             @include('users.navtabs')
-            {{-- ユーザ一覧 --}}
+            {{--お気に入り投稿 --}}
             @include('microposts.microposts')
         </div>
     </div>
